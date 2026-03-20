@@ -1,0 +1,124 @@
+/* Puray page ka background kaali (Black) aur font monospace */
+body {
+  background-color: #050505;
+  color: #00ff41; /* Classic Matrix Green */
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Main window scroll hide */
+}
+
+/* Terminal Container */
+.terminal {
+  background-color: #050505;
+  height: 100vh;
+  padding: 30px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* CRT Screen Effect (Optional: Thoda purana feel dene ke liye) */
+.terminal::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+/* ASCII Art glow */
+pre {
+  color: #00ff41;
+  text-shadow: 0 0 5px #00ff41;
+  font-size: 12px;
+  filter: brightness(1.2);
+}
+
+/* User Command styling */
+.user-text {
+  color: #ffffff;
+  text-shadow: 0 0 5px #fff;
+  font-weight: bold;
+}
+
+/* Bot Response styling */
+.bot-text {
+  color: #00ff41;
+  text-shadow: 0 0 2px #00ff41;
+}
+
+/* Links Styling */
+a {
+  color: #00ffff !important;
+  text-decoration: none;
+  border-bottom: 1px dashed #00ffff;
+}
+
+a:hover {
+  background: #00ffff;
+  color: #000 !important;
+}
+
+/* Input Area */
+.input-area {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.prompt {
+  color: #00ff41;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+input {
+  background: transparent;
+  border: none;
+  color: #00ff41;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  outline: none;
+  width: 100%;
+  text-shadow: 0 0 5px #00ff41;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #004400;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff41;
+}
+
+/* Blinking Cursor Animation */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Agar aap input ke aage blinking underscore chahte hain */
+.cursor {
+  display: inline-block;
+  background-color: #00ff41;
+  width: 10px;
+  height: 20px;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}

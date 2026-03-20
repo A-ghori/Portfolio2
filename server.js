@@ -8,11 +8,11 @@ app.use(express.json());
 
 // YE SABSE ZAROORI HAI:
 // Ye line browser ko batati hai ki Public folder ki saari files (CSS, JS) open hain
-app.use(express.static(path.join(__dirname, 'Public')));
+
 
 app.get("/", (req, res) => {
     // Sirf index.html bhejo, baaki files static middleware handle kar lega
-    res.sendFile(path.join(__dirname, 'Public', 'index.html'));
+res.send("Hii bro");
 });
 
 const commands = [
