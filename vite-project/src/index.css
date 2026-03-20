@@ -1,124 +1,125 @@
-/* Puray page ka background kaali (Black) aur font monospace */
-body {
-  background-color: #050505;
-  color: #00ff41; /* Classic Matrix Green */
-  font-family: 'Courier New', Courier, monospace;
+/* 1. Global Reset */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Main window scroll hide */
 }
 
-/* Terminal Container */
+body, html {
+  background-color: #000000; /* Pure Black */
+  color: #00ff41;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden; /* Screen scroll block */
+}
+
+/* 2. Terminal Container (No Borders, Full Screen) */
 .terminal {
-  background-color: #050505;
-  height: 100vh;
-  padding: 30px;
-  overflow-y: auto;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100dvh;
+  background-color: #000000;
+  padding: 20px 40px; /* Side spacing for readability */
+  display: flex;
+  flex-direction: column;
   position: relative;
 }
 
-/* CRT Screen Effect (Optional: Thoda purana feel dene ke liye) */
-.terminal::before {
+/* Subtle Scanline Effect (Optional, professional lagta hai) */
+.terminal::after {
   content: " ";
   display: block;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-              linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  z-index: 2;
-  background-size: 100% 2px, 3px 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+  z-index: 10;
+  background-size: 100% 2px;
   pointer-events: none;
+  opacity: 0.3;
 }
 
-/* ASCII Art glow */
+/* 3. History Scrollable Area */
+.history-container {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+/* ASCII Area - Center Aligned */
+.welcome-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 40px 0; /* Top/Bottom gap */
+}
+
 pre {
+  font-family: monospace;
+  font-size: clamp(8px, 1.8vw, 14px); /* Scalable ASCII */
+  line-height: 1.1;
   color: #00ff41;
   text-shadow: 0 0 5px #00ff41;
-  font-size: 12px;
-  filter: brightness(1.2);
+  white-space: pre;
 }
 
-/* User Command styling */
+/* 4. Text & Commands */
 .user-text {
   color: #ffffff;
-  text-shadow: 0 0 5px #fff;
   font-weight: bold;
+  margin-top: 15px;
+  font-size: 18px;
 }
 
-/* Bot Response styling */
 .bot-text {
   color: #00ff41;
-  text-shadow: 0 0 2px #00ff41;
+  margin-top: 5px;
+  line-height: 1.6;
+  font-size: 16px;
 }
 
-/* Links Styling */
-a {
-  color: #00ffff !important;
-  text-decoration: none;
-  border-bottom: 1px dashed #00ffff;
-}
-
-a:hover {
-  background: #00ffff;
-  color: #000 !important;
-}
-
-/* Input Area */
-.input-area {
+/* 5. Input Area (Fixed at bottom) */
+.input-line {
   display: flex;
   align-items: center;
-  margin-top: 15px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(0, 255, 65, 0.1); /* Very subtle separator */
 }
 
 .prompt {
   color: #00ff41;
   font-weight: bold;
   margin-right: 10px;
+  font-size: 18px;
 }
 
 input {
   background: transparent;
   border: none;
   color: #00ff41;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: inherit;
   font-size: 18px;
   outline: none;
   width: 100%;
-  text-shadow: 0 0 5px #00ff41;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
+/* 6. Custom Scrollbar (Stealth mode) */
+.history-container::-webkit-scrollbar {
+  width: 6px;
 }
-
-::-webkit-scrollbar-track {
-  background: #050505;
+.history-container::-webkit-scrollbar-thumb {
+  background: #111; /* Lagbhag invisible */
 }
-
-::-webkit-scrollbar-thumb {
-  background: #004400;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
+.history-container::-webkit-scrollbar-thumb:hover {
   background: #00ff41;
 }
 
-/* Blinking Cursor Animation */
-@keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-/* Agar aap input ke aage blinking underscore chahte hain */
-.cursor {
-  display: inline-block;
-  background-color: #00ff41;
-  width: 10px;
-  height: 20px;
-  margin-left: 5px;
-  animation: blink 1s infinite;
+/* 7. Mobile View Adjustments */
+@media (max-width: 600px) {
+  .terminal {
+    padding: 15px 20px;
+  }
+  .user-text, .bot-text, input, .prompt {
+    font-size: 15px;
+  }
 }

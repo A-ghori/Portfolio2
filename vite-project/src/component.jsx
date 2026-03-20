@@ -16,7 +16,7 @@ function Terminal() {
     const [input, setInput] = useState("");
     const [history, setHistory] = useState([]);
     const bottomRef = useRef(null);
-
+const terminalPrompt = "user@Linux:~$";
     // Auto-scroll whenever history updates
    // useEffect(() => {
      //   bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -42,7 +42,7 @@ function Terminal() {
                 return;
             }
         // Add usercommand to history
-        setHistory(prev => [...prev, {type: "user", content: [`> ${userCommand}`]}]);
+        setHistory(prev => [...prev, {type: "user", content: [`user@Linux:~$ ${userCommand}`]}]);
         setInput(''); // Clear input after adding to history
         // Handle Commands
 try{
@@ -56,51 +56,41 @@ try{
     }
   }
 return (
-        <div className="terminal" style={{ background: '#000', color: '#0f0', height: '100vh', padding: '20px', overflowY: 'auto', fontFamily: 'monospace' }}>
-            
-            {/* --- FIXED SECTION: ASCII Welcome (Yeh kabhi clear nahi hoga) --- */}
-            <div className="welcome-area">
-                <TypewriterASCII text={welcomeArt} speed={1} />
-                <div style={{ color: '#0f0', marginBottom: '20px' }}>
-                    Welcome Stranger! Type 'help' to see available commands.
-                </div>
-            </div>
+      <div className="terminal">
+        <div className="history-container">
+          <div className="welcome-area">
+            <TypewriterASCII text={welcomeArt} speed={1} />
+            <p style={{ marginTop: '10px' }}>Welcome Stranger! Type 'help' to start.</p>
+          </div>
 
-            {/* --- DYNAMIC SECTION: History (Sirf yahi clear hoga) --- */}
-            <div className="history-area">
-                {history.map((line, i) => (
-                    <div key={i} style={{ marginBottom: '10px' }}>
-                        {line.content?.map((item, idx) => {
-                            const isObject = typeof item === 'object' && item !== null;
-                            const displayContent = isObject 
-                                ? `${item.text} - <a href="${item.link}" target="_blank" style="color: cyan;">${item.link}</a>` 
-                                : item;
-
-                            return (
-                                <div key={idx} 
-                                     style={{ color: line.type === 'user' ? '#fff' : '#0f0' }}
-                                     dangerouslySetInnerHTML={{ __html: displayContent }} 
-                                />
-                            );
-                        })}
-                    </div>
+          <div className="history-area">
+            {history.map((line, i) => (
+              <div key={i}>
+                {line.content.map((item, idx) => (
+                  <div 
+                    key={idx} 
+                    className={line.type === 'user' ? 'user-text' : 'bot-text'}
+                    // User text ko direct render karo (Safety) aur Bot text ko dangerously
+                    dangerouslySetInnerHTML={{ __html: item.text || item }} 
+                  />
                 ))}
-            </div>
-
-            {/* --- INPUT AREA --- */}
-            <div className="input-area" style={{ display: 'flex', marginTop: '10px' }}>
-                <span style={{ color: '#0f0' }}>&gt;&nbsp;</span>
-                <input 
-                    value={input} 
-                    onChange={e => setInput(e.target.value)} 
-                    onKeyDown={handleCommand}
-                    style={{ background: 'transparent', border: 'none', color: '#0f0', outline: 'none', width: '100%', fontFamily: 'monospace', fontSize: '16px' }}
-                    autoFocus
-                />
-            </div>
-            <div ref={bottomRef} style={{ height: '50px' }} />
+              </div>
+            ))}
+          </div>
+          <div ref={bottomRef} />
         </div>
+
+        {/* 2. Input Section - Prompt change kar diya */}
+        <div className="input-line">
+          <span className="prompt">{terminalPrompt}&nbsp;</span>
+          <input 
+            value={input} 
+            onChange={e => setInput(e.target.value)} 
+            onKeyDown={handleCommand}
+            autoFocus 
+          />
+        </div>
+      </div>
     );
 }
-
 export default Terminal;
