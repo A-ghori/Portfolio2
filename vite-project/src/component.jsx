@@ -47,7 +47,8 @@ const terminalPrompt = "user@Linux:~$";
         setInput(''); // Clear input after adding to history
         // Handle Commands
 try{
-     const res = await axios.post("http://localhost:3000/test", {command: userCommand});
+  const API_URL = "https://portfolio2-ei5x.onrender.com/test";  
+  const res = await axios.post(API_URL, {command: userCommand});
         const botResponse = res.data.response;
         botResponse.forEach(item => {
           if(item.isImage){

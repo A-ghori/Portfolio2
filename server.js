@@ -9,7 +9,9 @@ app.use(express.json());
 
 // YE SABSE ZAROORI HAI:
 // Ye line browser ko batati hai ki Public folder ki saari files (CSS, JS) open hain
-
+app.use(cors({
+  origin: "https://portfolio2-two-delta.vercel.app"
+}));
 
 app.get("/", (req, res) => {
     // Sirf index.html bhejo, baaki files static middleware handle kar lega
