@@ -4,15 +4,17 @@ const path = require('path');
 const cors = require("cors");
 const { text } = require("stream/consumers");
 const PORT = 3000;
-app.use(cors());
+
 app.use(express.json());
 
 // YE SABSE ZAROORI HAI:
 // Ye line browser ko batati hai ki Public folder ki saari files (CSS, JS) open hain
+// Purane saare cors hata kar sirf ye ek likho
 app.use(cors({
-  origin: "https://portfolio2-two-delta.vercel.app"
+  origin: "*", // Testing phase mein sab allow karo
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
 }));
-
 app.get("/", (req, res) => {
     // Sirf index.html bhejo, baaki files static middleware handle kar lega
 res.send("Hii bro");
