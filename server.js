@@ -198,10 +198,10 @@ case "cat" :
     //}
     //}
 
-  //else if(file.type === 'file') response = [{
-    //text: file.content || "Opening the file...",
-    //link: file.link
-  //}]
+  else if(file.type === 'file') response = [{
+    text: file.content || "Opening the file...",
+    link: file.link
+}]
 
   else if(typeof file === 'string') response = [file];
 
