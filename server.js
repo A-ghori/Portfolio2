@@ -183,25 +183,25 @@ case "cat" :
 
   if(!filename) response = ["Usage : cat<filename><password if needed>"];
   else if(!file) response = [`Cat : ${filename} No Such Files in the directories`];
-  else if(file.type === 'file'){
-    if(!userPassword || userPassword !==file.password){
-        response = [
-          `Access Denied ${userPassword} you mf ${filename} is protected`,
-          `Hint: ${file.hint || "No Hint Available"}` 
-        ]
-    } else {
-          response = [{
-            text : `Access granted! Opening ${filename}`,
-            link: "",
-            isImage: true,
-    }]
-    }
-    }
+  //else if(file.type === 'file'){
+    //if(!userPassword || userPassword !==file.password){
+      //  response = [
+        //  `Access Denied ${userPassword} you mf ${filename} is protected`,
+          //`Hint: ${file.hint || "No Hint Available"}` 
+        //]
+    //} else {
+      //    response = [{
+        //    text : `Access granted! Opening ${filename}`,
+          //  link: "",
+           // isImage: true,
+    //}]
+    //}
+    //}
 
-  else if(file.type === 'file') response = [{
-    text: file.content || "Opening the file...",
-    link: file.link
-  }]
+  //else if(file.type === 'file') response = [{
+    //text: file.content || "Opening the file...",
+    //link: file.link
+  //}]
 
   else if(typeof file === 'string') response = [file];
 
