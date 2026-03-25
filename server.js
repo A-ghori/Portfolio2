@@ -176,36 +176,57 @@ case "help" :
 response = ["Available Commands are : ls, pwd, cat, clear"]
 break;
 
-case "cat" :
+//case "cat" :
+//  const filename = args[1];
+//  const userPassword = args[2];
+//  const file = currDir[filename];
+//
+//  if(!filename) response = ["Usage : cat<filename><password if needed>"];
+//  else if(!file) response = [`Cat : ${filename} No Such Files in the directories`];
+//  //else if(file.type === 'file'){
+//    //if(!userPassword || userPassword !==file.password){
+//      //  response = [
+//        //  `Access Denied ${userPassword} you mf ${filename} is protected`,
+//          //`Hint: ${file.hint || "No Hint Available"}` 
+//        //]
+//    //} else {
+//      //    response = [{
+//        //    text : `Access granted! Opening ${filename}`,
+//          //  link: "",
+//           // isImage: true,
+//    //}]
+//    //}
+//    //}
+//
+//  else if(file.type === 'file') response = [{
+//    text: file.content || "Opening the file...",
+//    link: file.link
+//}]
+//
+//  else if(typeof file === 'string') response = [file];
+//
+//  else response = [`cat: ${filename}: Is a directory (Use 'cd' to enter)`];
+case "cat":
   const filename = args[1];
-  const userPassword = args[2];
   const file = currDir[filename];
 
-  if(!filename) response = ["Usage : cat<filename><password if needed>"];
-  else if(!file) response = [`Cat : ${filename} No Such Files in the directories`];
-  //else if(file.type === 'file'){
-    //if(!userPassword || userPassword !==file.password){
-      //  response = [
-        //  `Access Denied ${userPassword} you mf ${filename} is protected`,
-          //`Hint: ${file.hint || "No Hint Available"}` 
-        //]
-    //} else {
-      //    response = [{
-        //    text : `Access granted! Opening ${filename}`,
-          //  link: "",
-           // isImage: true,
-    //}]
-    //}
-    //}
-
-  else if(file.type === 'file') response = [{
-    text: file.content || "Opening the file...",
-    link: file.link
-}]
-
-  else if(typeof file === 'string') response = [file];
-
-  else response = [`cat: ${filename}: Is a directory (Use 'cd' to enter)`];
+  if (!filename) {
+    response = ["usage: cat <filename>"];
+  } else if (!file) {
+    response = [`cat: ${filename}: No such file or directory`];
+  } else if (typeof file === 'object' && file.type === 'file') {
+    // Handle files with links/metadata
+    response = [{
+      text: file.content || "Opening file...",
+      link: file.link || null
+    }];
+  } else if (typeof file === 'string') {
+    // Handle simple string files (like help.txt)
+    response = [file];
+  } else {
+    // It's an object but doesn't have type: 'file', so it's a directory
+    response = [`cat: ${filename}: Is a directory`];
+  }
 break;
   
   default: 
